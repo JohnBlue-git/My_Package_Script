@@ -1,0 +1,10 @@
+certifi
+charset-normalizer
+idna
+iniconfig
+packaging
+pluggy
+pytest
+pytest-order
+requests
+urllib3
