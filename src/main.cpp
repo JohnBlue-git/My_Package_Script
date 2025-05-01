@@ -1,24 +1,33 @@
 #include <iostream>
 #include <cstdlib>  // for system()
-using namespace std;
 
 int main() {
-    int exit_code = system("./pacakge.sh ... not yet complete");
+    int exit_code = system("./package.sh --mode create --tarball /tmp/code.tar --files ./main.cpp");
 
     if (exit_code == -1) {
-        cerr << "Failed to run script." << endl;
+        std::cerr << "Failed to run script." << std::endl;
         return 1;
     }
 
     // Extract actual exit status from system()
     int status = WEXITSTATUS(exit_code);
-    cout << "Script exited with code: " << status << endl;
+    std::cout << "Script exited with code: " << status << std::endl;
 
-    if (status != 0) {
-        cerr << "Script failed with non-zero exit code." << endl;
-        return status;
+    switch (status)
+    {
+    case 0:
+        std::cout << "Pacakge success" << std::endl;
+        break;
+    case 1:
+        std::cerr << "Package fail: hit how to use / invalid usage / other fail" << std::endl;
+        break;
+    case 2:
+        std::cerr << "Package fail: tarball or file or follder does not exist" << std::endl;
+        break;
+    case 3:
+        std::cerr << "Package fail: fail to tar command (or is not tarball)" << std::endl;
+        break;
     }
-
-    cout << "Script ran successfully." << endl;
+  
     return 0;
 }
