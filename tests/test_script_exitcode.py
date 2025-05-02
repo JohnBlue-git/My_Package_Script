@@ -24,20 +24,28 @@ def run_script(args, input=None):
     return result
 
 def test_invalid_mode_fails(tmp_path):
-    result = run_script(["--mode", "invalid"])
+    result = run_script(["--mode", "invalid_mode"])
     assert result.returncode == 1
     assert "Invalid mode" in result.stdout or result.stderr
-
-
-def test_missing_tarball_error(tmp_path):
-    result = run_script(["--mode", "extract", "--folder", str(tmp_path)])
-    assert result.returncode == 1
-    assert "Error" in result.stdout or result.stderr
-
 
 def test_missing_required_args(tmp_path):
     result = run_script(["--mode", "create"])
     assert result.returncode == 1
     assert "Error" in result.stdout or result.stderr
 
-#def ... to be continuue ...
+def test_missing_tarball_arga(tmp_path):
+    result = run_script(["--mode", "extract", "--folder", str(tmp_path)])
+    assert result.returncode == 1
+    assert "Error" in result.stdout or result.stderr
+
+def test_invalid_file_path(tmp_path):
+    result = run_script(["--mode", "create", "--tarball", "tarball.tar", "--files", "invalid_file"])
+    assert result.returncode == 2
+
+def test_invalid_folder_path(tmp_path):
+    result = run_script(["--mode", "extract", "--tarball", "tarball.tar", "--folder", "invalid_folder"])
+    assert result.returncode == 2
+
+def test_invalid_tarball_fail(tmp_path):
+    result = run_script(["--mode", "extract", "--tarball", "../src/main.cpp", "--folder", str(tmp_path)])
+    assert result.returncode == 3
