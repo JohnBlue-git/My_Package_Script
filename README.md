@@ -95,6 +95,13 @@ g++ main.cpp
 ```
 
 ## Tests
+
+### Test via pytest
+We have provide e2e tests via python scripts (please refer to the follwing README.md and navigate to tests folder)
+\
+[tests/README.md](tests/README.md)
+
+### Look deeper in my tests desgin
 Here, we have two kinds of tests
 - tests/test_script_service.py
     - this test the functions of package.sh
